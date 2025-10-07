@@ -63,7 +63,7 @@
 - **Launch the user interface:**
 
   ```bash
-  python ui.py
+  streamlit run ui.py
   ```
 
 - **Other scripts** can be run similarly for individual functionalities.
