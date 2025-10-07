@@ -17,6 +17,7 @@ setup_logging()
 logger = logging.getLogger("langgraph_workflow")
 
 
+
 class AgentState(TypedDict):
     user_query: str
     query_embedding: Optional[Any]

@@ -16,6 +16,7 @@ GOOGLE_CLOUD_PROJECT = os.getenv("GOOGLE_CLOUD_PROJECT")
 GOOGLE_CLOUD_LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION")
 GOOGLE_GENAI_USE_VERTEXAI = os.getenv("GOOGLE_GENAI_USE_VERTEXAI")
 
+
 class GoogleEmbeddings:
     def __init__(self):
         try:
@@ -66,6 +67,7 @@ class VectorChromaDB:
 
             self.collection = self.client.get_or_create_collection(
                 name=collection_name)
+            self.g_embed = GoogleEmbeddings()
             logger.info(f"Chroma DB client initiated for db: {collection_name}")
         except Exception as e:
             logger.exception(f"Exception while initializing chroma db client. Exception: {e}",
@@ -79,7 +81,7 @@ class VectorChromaDB:
             doc_id = str(uuid.uuid4())
 
             # Generate embeddings
-            response = GoogleEmbeddings().generate_embedding(doc)
+            response = self.g_embed.generate_embedding(doc)
 
             embeddings = response.embeddings[0].values
 
@@ -119,21 +121,21 @@ def generate_and_store_embedding():
 # generate_and_store_embedding()
 
 
-def generate_query_embedding(user_query:str):
-    """this method is used to generate embedding for user_query"""
-    vector_db = VectorChromaDB("pd_incidents")
-    response = GoogleEmbeddings().generate_embedding(user_query)
-    qry_embeddings = response.embeddings[0].values
-    result = vector_db.get_records(qry_embeddings,top_k=3)
-    return result
-# testing the solution:
-def get_result():
-    vector_db = VectorChromaDB("pd_incidents")
-    user_query = "SQL server memory pressure observed"
-    response = GoogleEmbeddings().generate_embedding(user_query)
-    qry_embeddings = response.embeddings[0].values
-    result = vector_db.get_records(qry_embeddings,top_k=3)
-    return result
-
-# resp = get_result()
-# print(resp['metadatas'])
+# def generate_query_embedding(user_query:str):
+#     """this method is used to generate embedding for user_query"""
+#     vector_db = VectorChromaDB("pd_incidents")
+#     response = GoogleEmbeddings().generate_embedding(user_query)
+#     qry_embeddings = response.embeddings[0].values
+#     result = vector_db.get_records(qry_embeddings,top_k=3)
+#     return result
+# # testing the solution:
+# def get_result():
+#     vector_db = VectorChromaDB("pd_incidents")
+#     user_query = "SQL server memory pressure observed"
+#     response = GoogleEmbeddings().generate_embedding(user_query)
+#     qry_embeddings = response.embeddings[0].values
+#     result = vector_db.get_records(qry_embeddings,top_k=3)
+#     return result
+#
+# # resp = get_result()
+# # print(resp['metadatas'])

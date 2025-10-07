@@ -10,7 +10,7 @@ def setup_logging():
 
     - Logs to a rotating file (max 5MB, 5 backup files).
     - Logs to the console.
-    - Sets different log levels for file and console handlers.
+    - Sets different log levels for file and console handlers. 
     """
 
     log_dir = "logs"

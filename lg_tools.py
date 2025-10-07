@@ -11,6 +11,7 @@ import json
 setup_logging()
 logger = logging.getLogger("tools")
 
+
 @tool
 def generate_query_embedding(user_query: str):
     """this method is used to generate embedding for user_query"""

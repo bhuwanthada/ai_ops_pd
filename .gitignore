@@ -1,0 +1,4 @@
+.env
+pd_venv
+.idea
+__pycache__
